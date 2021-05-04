@@ -46,7 +46,7 @@ samtools index tu.sorted.trimmed.bam
 ```
 
 ### Calculation of read-depth
-Read depth can be calculated by using 'samtools', -a report null depth positions and -r restrict the calculation to a region of interest:
+Read depth can be calculated by using 'samtools', '-a' reports null depth positions and '-r' restricts the calculation to a region of interest:
 
 ```
  samtools depth -a -r X:20000000-40000000 wt.sorted.trimmed.bam -o wt.depth.data
