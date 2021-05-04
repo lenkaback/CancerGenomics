@@ -2,7 +2,7 @@
 ### Prerequisities
  - unix system
     - bowtie2 
-    - samtools. 
+    - samtools
  - python
     - numpy
     - matplotlib
