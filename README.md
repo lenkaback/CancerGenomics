@@ -10,12 +10,16 @@
 ### Data
 Genome data are in the folder data. We need to download the reference human genome, in this case Genome Reference Consortium Human Build 37 (GRCh37):
 
-`wget http://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz`
+```
+wget http://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz
+```
 
 ### Alignment to reference
 Build index from the reference genome into files with name human_ref
 
-`bowtie2-build Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz human_ref`
+```
+bowtie2-build Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz human_ref
+```
 
 Now, we can align the tumor and normal genome to the reference into SAM files with corresponding names:
 
@@ -52,6 +56,8 @@ Read depth can be calculated by using 'samtools'
 ### Plot the results
 To plot the read-depth of the wild-type and tumor genome, and their log2 ration use the following python script with parameters:
 
-`python depth_plot.py --wt_file_name wt.depth.data --tu_file_name tu.depth.data --window_size 10000`
+```
+python depth_plot.py --wt_file_name wt.depth.data --tu_file_name tu.depth.data --window_size 10000
+```
 
 The resulting graphs are saved as PNG files and can be found in the folder results.
