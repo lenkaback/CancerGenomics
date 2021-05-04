@@ -1,26 +1,26 @@
 #!/usr/bin/env python
-
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 import argparse
 
-
+#parse arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('--wt_file_name', type=str)
 parser.add_argument('--tu_file_name', type=str)
 parser.add_argument('--window_size', default = 10000, type=int)
-
 args = parser.parse_args()
 
+# function to read the depth file line by line
+# returns numpy arrays of chromosome types for each position, position index and the read-depth at the corresponding position
 def read_depth_file(filename):
-    f_wt_depth = open(filename, "r")
+    f_depth = open(filename, "r")
 
     chromosomes, positions, reads = [], [], []
 
     while True: 
         # Get next line from file
-        line = f_wt_depth.readline()
+        line = f_depth.readline()
 
         if not line:
             break
@@ -30,7 +30,7 @@ def read_depth_file(filename):
     f_wt_depth.close()
     return chromosomes, np.array(positions), np.array(reads)
 
-
+# function to plot the read depth averaged over a windows defined by window_size
 def plot_read_depth(x, y, chrom, type_genome, window_size, color, im_name, ratio=False):
     plt.figure(figsize=(15, 10))
     plt.plot(x/1000000, y, 'o', markersize=5, markeredgewidth=0.7, markeredgecolor="w", color=color)
@@ -43,7 +43,7 @@ def plot_read_depth(x, y, chrom, type_genome, window_size, color, im_name, ratio
     plt.title(f'Read depth {type_genome} (averaged every {window_size} bases)')
     plt.savefig(im_name)
 
-
+# function to take average of the reads (and positions) over the window - shoul be rigid against window size, which does not divide the length of the data
 def average_over_window(x, y, window_size):
     mod = len(x) % window_size
 
@@ -56,7 +56,7 @@ def average_over_window(x, y, window_size):
     y_mean = np.concatenate((y_mean, y_mean_rest), axis=0)
     return x_mean, y_mean
 
-
+# call all methods to produce the results
 def main(args):
     wt_depth_filename = args.wt_file_name
     tu_depth_filename = args.tu_file_name
@@ -70,6 +70,7 @@ def main(args):
     
     plot_read_depth(wt_mean_positions, wt_mean_reads, wt_chromosomes, "of normal genome", window_size, 'green', "normal_depth.png")
     plot_read_depth(tu_mean_positions, tu_mean_reads, tu_chromosomes, "of tumor genome", window_size, 'red', "tumor_depth.png")
+    
     log_ratio = np.log2(tu_mean_reads/wt_mean_reads)
     plot_read_depth(tu_mean_positions, log_ratio, tu_chromosomes, "ratio", window_size, 'blue', "log2_ratio.png", ratio=True)
 
