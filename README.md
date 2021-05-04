@@ -15,7 +15,7 @@ wget http://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapie
 ```
 
 ### Alignment to reference
-Build index from the reference genome into files with name human_ref
+Build index from the reference genome into files with name prefix human_ref:
 
 ```
 bowtie2-build Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz human_ref
@@ -30,7 +30,7 @@ bowtie2 -x human_ref -1 tu.r1.fq.gz -2 tu.r2.fq.gz -S tu.sam -p 8
 
 ### Processing of the aligned files
 
-Afterwards, we convert the SAM file to a BAM file, sort and index the aligned file. As well as, trim the datasets to the region of interest - chromosome X from 20Mbp to 40Mbp (GRCh37/hg19 coordinates):
+Afterwards, we convert the SAM files to BAM files, sort and index the aligned files. As well as, trim the datasets to the region of interest - chromosome X from 20Mbp to 40Mbp (GRCh37/hg19 coordinates):
 ```
 samtools view -u wt.sam | samtools sort -o wt.sorted.bam
 samtools index wt.sorted.bam
@@ -46,7 +46,7 @@ samtools index tu.sorted.trimmed.bam
 ```
 
 ### Calculation of read-depth
-Read depth can be calculated by using 'samtools' 
+Read depth can be calculated by using 'samtools', -a report null depth positions and -r restrict the calculation to a region of interest:
 
 ```
  samtools depth -a -r X:20000000-40000000 wt.sorted.trimmed.bam -o wt.depth.data
@@ -54,10 +54,10 @@ Read depth can be calculated by using 'samtools'
 ```
 
 ### Plot the results
-To plot the read-depth of the wild-type and tumor genome, and their log2 ration use the following python script with parameters:
+To plot the read-depth of the wild-type and tumor genome, and their log2 ratio use the following python script with parameters:
 
 ```
 python depth_plot.py --wt_file_name wt.depth.data --tu_file_name tu.depth.data --window_size 10000
 ```
 
-The resulting graphs are saved as PNG files and can be found in the folder results.
+The resulting graphs are saved as PNG files and can be found in the folder **results**.
