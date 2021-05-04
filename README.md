@@ -8,7 +8,7 @@
     - matplotlib
 
 ### Data
-Genome data can be downloaded from https://gear.embl.de/data/.exercise/. We need to download the reference human genome, in this case Genome Reference Consortium Human Build 37 (GRCh37):
+Genome data can be downloaded from https://gear.embl.de/data/.exercise/. We need to download the reference human genome of chromosome X, in this case Genome Reference Consortium Human Build 37 (GRCh37):
 
 ```
 wget http://ftp.ensembl.org/pub/grch37/current/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.chromosome.X.fa.gz
